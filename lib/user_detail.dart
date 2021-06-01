@@ -57,7 +57,8 @@ class UserDetailsState extends State<UserDetails>
                 widget.street!=""?
                      Text(widget.street):SizedBox(),
                 widget.city!=""?
-                    Text(widget.city):SizedBox()
+                    Text(widget.city):SizedBox(),
+
               ],
             ),
           ),
