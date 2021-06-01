@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "918852903849",
+    "project_id": "webcrafts-18963",
+    "storage_bucket": "webcrafts-18963.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:918852903849:android:84540022523e3e1cf5dab8",
+        "android_client_info": {
+          "package_name": "com.exercise.web_crafts"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "918852903849-315kbjkg3i2dvmt6jnefje8tmijm91jj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.exercise.web_crafts",
+            "certificate_hash": "10217ec3972674daf734ecbe2dd741f945b217fd"
+          }
+        },
+        {
+          "client_id": "918852903849-th0keq71slaecfsgp2o4up3ft0n4hb32.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCXCVDhJgQJfZ1RyHz1CNT7c_of9nSfOhg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "918852903849-th0keq71slaecfsgp2o4up3ft0n4hb32.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
