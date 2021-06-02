@@ -48,15 +48,18 @@ class UserDetailsState extends State<UserDetails>
                      CircleAvatar(
                        backgroundImage: NetworkImage(widget.imageUrl),
                        radius: 40,
-                     ):AssetImage('images/user.png'),
+                     ):CircleAvatar(
+                   backgroundImage: AssetImage('images/user.png'),
+                   radius: 40,
+                 ),
                 SizedBox(height: 10.0,),
                 Text(widget.name),
                 Text(widget.email),
-                widget.company_name!=""?
+                widget.company_name!="" && widget.company_name !=null?
                      Text(widget.company_name):SizedBox(),
-                widget.street!=""?
+                widget.street!="" && widget.street !=null?
                      Text(widget.street):SizedBox(),
-                widget.city!=""?
+                widget.city!="" && widget.city !=null?
                     Text(widget.city):SizedBox(),
 
               ],
