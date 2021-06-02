@@ -17,6 +17,7 @@ class Repository
         Map<String, dynamic> list = new HashMap();
         list["name"] = user.name;
         list['email']= user.email;
+        list['name_search'] = setSearchParams(user.name);
         list['profile_image']=user.profileImage;
         list['id']= user.id;
         list['website']=user.website;
@@ -32,5 +33,14 @@ class Repository
         _firestore.collection('user_collection').doc(user.id.toString()).set(list);
       }
     return userList;
+  }
+  setSearchParams(String caseNumber) {
+    List<String> caseSearchList = List();
+    String temp = "";
+    for (int i = 0; i < caseNumber.length; i++) {
+      temp = temp + caseNumber[i];
+      caseSearchList.add(temp);
+    }
+    return caseSearchList;
   }
 }

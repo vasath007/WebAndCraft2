@@ -17,6 +17,8 @@ class HomeState extends State<Home>
     fromFirestore: (snapshots, _) => UserModel.fromJson(snapshots.data()),
     toFirestore: (userModel, _) => userModel.toJson(),
   );
+  final _SearchFireStore = FirebaseFirestore.instance.collection('user_collection');
+  String chatPeopleName = "";
   @override
   void initState()
   {
@@ -40,29 +42,40 @@ class HomeState extends State<Home>
             ),
             preferredSize: Size.fromHeight(0.5)),
       ),
-      body: StreamBuilder<QuerySnapshot>(
-        stream: _fireStore.snapshots(),
-        builder: (context, snapshot)
-        {
-          if (!snapshot.hasData )
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          return ListView.builder(
-            itemCount: snapshot.data.docs.length,
-              itemBuilder:(context, i)
-             {
-                 return Records(
-                   website: "",
-                   image: snapshot.data.docs[i].get('profile_image')??"",
-                   id: snapshot.data.docs[i].get('id').toString(),
-                   name: snapshot.data.docs[i].get('name'),
-                   email: snapshot.data.docs[i].get('email'),
-                   address: snapshot.data.docs[i].get('address'),
-                   company: snapshot.data.docs[i].get('company'),
-                 );
-               });
-        },
+      body: Column(
+        children: [
+          searchFeild(),
+          Expanded(
+            child: StreamBuilder<QuerySnapshot>(
+              stream: chatPeopleName == ""?_fireStore.snapshots():
+                      _SearchFireStore.where("name_search",arrayContains: chatPeopleName).withConverter<UserModel>(
+                        fromFirestore: (snapshots, _) => UserModel.fromJson(snapshots.data()),
+                        toFirestore: (userModel, _) => userModel.toJson(),
+                      ).snapshots(),
+              builder: (context, snapshot)
+              {
+                if (!snapshot.hasData )
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                return ListView.builder(
+                  itemCount: snapshot.data.docs.length,
+                    itemBuilder:(context, i)
+                   {
+                       return Records(
+                         website: "",
+                         image: snapshot.data.docs[i].get('profile_image')??"",
+                         id: snapshot.data.docs[i].get('id').toString(),
+                         name: snapshot.data.docs[i].get('name'),
+                         email: snapshot.data.docs[i].get('email'),
+                         address: snapshot.data.docs[i].get('address'),
+                         company: snapshot.data.docs[i].get('company'),
+                       );
+                     });
+              },
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -70,6 +83,38 @@ class HomeState extends State<Home>
   void getUserInfo() async
   {
     await Repository().fetchUserDetails();
+  }
+
+  searchFeild()
+  {
+    return Padding(
+      padding: const EdgeInsets.only(top: 10.0, bottom: 10.0),
+      child: Container(
+          decoration: BoxDecoration(
+            color: Theme.of(context).scaffoldBackgroundColor,
+            borderRadius: BorderRadius.circular(25),
+          ),
+          child: new TextField(
+            autofocus: false,
+            style: TextStyle(
+                color: Colors.black),
+            textCapitalization: TextCapitalization.sentences,
+            decoration: InputDecoration(
+              hintStyle: TextStyle(
+                  fontSize: 17 /
+                      MediaQuery.of(context).textScaleFactor),
+              hintText:
+              'Search name...',
+              border: InputBorder.none,
+              contentPadding: EdgeInsets.all(20),
+            ),
+            onChanged: (val) {
+              setState(() {
+                chatPeopleName = val;
+              });
+            },
+          )),
+    );
   }
 }
 
